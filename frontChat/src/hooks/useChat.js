@@ -2,18 +2,20 @@ import { useState, useEffect } from 'react';
 import { chatbotAPI } from '@services/api/chatbotAPI';
 import { storageService } from '@services/storage/localStorage';
 import { STORAGE_KEYS } from '@constants/config';
+import { chatSessions } from '@services/storage/chatSessions';
 
 /**
  * Hook personnalisé pour gérer le chatbot
  */
-export const useChat = () => {
+export const useChat = (sessionId = null) => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const historyKey = sessionId ? `${STORAGE_KEYS.CHAT_HISTORY}:${sessionId}` : STORAGE_KEYS.CHAT_HISTORY;
 
   // Charger l'historique au montage
   useEffect(() => {
-    const savedHistory = storageService.getItem(STORAGE_KEYS.CHAT_HISTORY);
+    const savedHistory = storageService.getItem(historyKey);
     if (savedHistory) {
       setMessages(savedHistory);
     } else {
@@ -27,14 +29,14 @@ export const useChat = () => {
         }
       ]);
     }
-  }, []);
+  }, [historyKey]);
 
   // Sauvegarder l'historique à chaque changement
   useEffect(() => {
     if (messages.length > 0) {
-      storageService.setItem(STORAGE_KEYS.CHAT_HISTORY, messages);
+      storageService.setItem(historyKey, messages);
     }
-  }, [messages]);
+  }, [messages, historyKey]);
 
   /**
    * Envoie un message au chatbot
@@ -52,6 +54,7 @@ export const useChat = () => {
       timestamp: new Date().toISOString()
     };
 
+    const hadUserBefore = messages.some(m => m.role === 'user');
     setMessages(prev => [...prev, userMessage]);
     setLoading(true);
 
@@ -69,6 +72,18 @@ export const useChat = () => {
         };
         
         setMessages(prev => [...prev, botMessage]);
+
+        if (sessionId) {
+          if (!hadUserBefore) {
+            const current = chatSessions.getById(sessionId);
+            const base = content.trim();
+            const title = base.length > 40 ? base.slice(0, 40) + '…' : base || 'Discussion';
+            if (current && (!current.title || current.title === 'Nouvelle conversation' || current.title === 'New chat')) {
+              chatSessions.rename(sessionId, title);
+            }
+          }
+          chatSessions.touch(sessionId);
+        }
       } else {
         setError(response.message);
       }

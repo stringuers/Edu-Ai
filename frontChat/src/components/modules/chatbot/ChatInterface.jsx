@@ -6,8 +6,8 @@ import { useChat } from '@hooks/useChat';
 import Loader from '@components/common/Loader';
 import Button from '@components/common/Button';
 
-const ChatInterface = () => {
-  const { messages, loading, error, sendMessage, clearMessages } = useChat();
+const ChatInterface = ({ sessionId = null }) => {
+  const { messages, loading, error, sendMessage, clearMessages } = useChat(sessionId);
   const messagesEndRef = useRef(null);
 
   // Auto-scroll vers le bas quand de nouveaux messages arrivent

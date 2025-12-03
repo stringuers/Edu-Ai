@@ -1,11 +1,53 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MessageSquare, Info, BookOpen, Lightbulb } from 'lucide-react';
 import ChatInterface from '@components/modules/chatbot/ChatInterface';
+import ChatGPTChatHistorySidebar from '@components/modules/chatbot/ChatGPTChatHistorySidebar';
+import { chatSessions } from '@services/storage/chatSessions';
+import { storageService } from '@services/storage/localStorage';
+import { STORAGE_KEYS } from '@constants/config';
 import Button from '@components/common/Button';
 import Modal from '@components/common/Modal';
 
 const ChatbotPage = () => {
   const [showInfo, setShowInfo] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
+  const [selectedChatId, setSelectedChatId] = useState(null);
+  const [chats, setChats] = useState([]);
+
+  // Load sessions on mount
+  useEffect(() => {
+    setChats(chatSessions.getAll());
+  }, []);
+
+  const handleNewChat = () => {
+    // Prevent creating a new chat if current is empty (no user messages)
+    if (selectedChatId) {
+      const history = storageService.getItem(`${STORAGE_KEYS.CHAT_HISTORY}:${selectedChatId}`) || [];
+      const hasUser = Array.isArray(history) && history.some((m) => m.role === 'user');
+      if (!hasUser) return; // block creation
+    }
+
+    const session = chatSessions.create('Nouvelle conversation');
+    setChats(chatSessions.getAll());
+    setSelectedChatId(session.id);
+  };
+
+  const handleSelectChat = (id) => {
+    setSelectedChatId(id);
+    chatSessions.touch(id);
+    setChats(chatSessions.getAll());
+  };
+
+  const handleDeleteChat = (id) => {
+    chatSessions.delete(id);
+    setChats(chatSessions.getAll());
+    if (selectedChatId === id) setSelectedChatId(null);
+  };
+
+  const handleRenameChat = (id, newName) => {
+    chatSessions.rename(id, newName);
+    setChats(chatSessions.getAll());
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 py-8">
@@ -54,7 +96,25 @@ const ChatbotPage = () => {
 
         {/* Interface du chat */}
         <div className="animate-slide-up">
-          <ChatInterface />
+          <div className="flex flex-col md:flex-row gap-4 h-[calc(100vh-220px)]">
+            <div className="h-full">
+              <ChatGPTChatHistorySidebar
+                chats={chats}
+                onSelectChat={handleSelectChat}
+                onDeleteChat={handleDeleteChat}
+                onRenameChat={handleRenameChat}
+                onNewChat={handleNewChat}
+                collapsed={collapsed}
+                onToggleCollapsed={() => setCollapsed((v) => !v)}
+                activeId={selectedChatId}
+                newChatDisabled={!!selectedChatId && !((storageService.getItem(`${STORAGE_KEYS.CHAT_HISTORY}:${selectedChatId}`) || []).some((m) => m.role === 'user'))}
+              />
+            </div>
+
+            <div className="flex-1">
+              <ChatInterface sessionId={selectedChatId} />
+            </div>
+          </div>
         </div>
 
         {/* Cartes d'information en bas */}

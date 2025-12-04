@@ -22,24 +22,24 @@ const ChatListItem = ({ chat, selected, onClick }) => {
       type="button"
       onClick={onClick}
       className={`w-full text-left px-3 py-3 rounded-xl transition border
-        ${selected ? 'bg-purple-50 border-purple-200 ring-2 ring-purple-200' : 'bg-white border-transparent hover:bg-gray-50'}
-        focus:outline-none focus:ring-2 focus:ring-purple-400`}
+        ${selected ? 'bg-brand-mint/60 border-brand-mint ring-2 ring-brand-mint/50' : 'bg-white border-transparent hover:bg-brand-mint/20'}
+        focus:outline-none focus:ring-2 focus:ring-brand-slate/40`}
     >
       <div className="flex items-start gap-3">
         <div className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center 
-          ${selected ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white' : 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'}`}>
+          ${selected ? 'bg-brand-mint text-brand-slate' : 'bg-white border border-brand-grey text-brand-slate'}`}>
           <MessageSquare className="w-5 h-5" />
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between gap-2">
-            <p className={`font-semibold truncate ${selected ? 'text-purple-900' : 'text-gray-900'}`}>
+            <p className={`font-semibold truncate ${selected ? 'text-text-primary' : 'text-text-primary'}`}>
               {chat.title || 'Nouvelle conversation'}
             </p>
-            <span className="text-xs text-gray-500 whitespace-nowrap">
+            <span className="text-xs text-text-secondary whitespace-nowrap">
               {formatTimestamp(chat.updatedAt)}
             </span>
           </div>
-          <p className="text-sm text-gray-600 truncate">
+          <p className="text-sm text-text-secondary truncate">
             {chat.lastMessage || 'Aucun message'}
           </p>
         </div>
@@ -49,12 +49,12 @@ const ChatListItem = ({ chat, selected, onClick }) => {
 };
 
 const SkeletonItem = () => (
-  <div className="px-3 py-3 rounded-xl border border-transparent bg-white animate-pulse">
+  <div className="px-3 py-3 rounded-xl border border-brand-grey/40 bg-white animate-pulse">
     <div className="flex items-start gap-3">
-      <div className="w-10 h-10 rounded-lg bg-gray-200" />
+      <div className="w-10 h-10 rounded-lg bg-brand-grey/40" />
       <div className="flex-1 min-w-0 space-y-2">
-        <div className="h-3 bg-gray-200 rounded w-1/2" />
-        <div className="h-3 bg-gray-200 rounded w-3/4" />
+        <div className="h-3 bg-brand-grey/50 rounded w-1/2" />
+        <div className="h-3 bg-brand-grey/50 rounded w-3/4" />
       </div>
     </div>
   </div>
@@ -62,15 +62,15 @@ const SkeletonItem = () => (
 
 const EmptyState = ({ onNewChat }) => (
   <div className="h-full flex flex-col items-center justify-center text-center px-6 py-10">
-    <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-white mb-4">
+    <div className="w-12 h-12 rounded-xl bg-brand-mint flex items-center justify-center text-brand-slate mb-4 shadow-card">
       <MessageSquare className="w-6 h-6" />
     </div>
-    <h3 className="text-sm font-semibold text-gray-900 mb-1">Aucune conversation</h3>
-    <p className="text-sm text-gray-600 mb-4">Commence une nouvelle discussion pour la voir apparaître ici.</p>
+    <h3 className="text-sm font-semibold text-text-primary mb-1">Aucune conversation</h3>
+    <p className="text-sm text-text-secondary mb-4">Commence une nouvelle discussion pour la voir apparaître ici.</p>
     <button
       type="button"
       onClick={onNewChat}
-      className="inline-flex items-center px-3 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow hover:shadow-md transform hover:scale-105 transition focus:outline-none focus:ring-2 focus:ring-purple-500"
+      className="inline-flex items-center px-3 py-2 rounded-lg bg-brand-accent text-white shadow-sm hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-brand-accent"
     >
       <Plus className="w-4 h-4 mr-2" />
       Nouvelle conversation
@@ -100,14 +100,14 @@ const ChatHistorySidebar = ({
   }, [chats, query]);
 
   return (
-    <aside className={`h-full bg-white border-r border-gray-200 flex flex-col w-full sm:w-80 md:w-96 ${className}`}>
-      <div className="p-4 border-b border-gray-200 space-y-3">
+    <aside className={`h-full bg-white border-r border-brand-grey flex flex-col w-full sm:w-80 md:w-96 ${className}`}>
+      <div className="p-4 border-b border-brand-grey space-y-3">
         <div className="flex items-center justify-between gap-2">
-          <h2 className="text-lg font-semibold text-gray-900">Conversations</h2>
+          <h2 className="text-lg font-semibold text-text-primary">Conversations</h2>
           <button
             type="button"
             onClick={onNewChat}
-            className="inline-flex items-center px-3 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow hover:shadow-md transform hover:scale-105 transition focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="inline-flex items-center px-3 py-2 rounded-lg bg-brand-accent text-white shadow-sm hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-brand-accent"
           >
             <Plus className="w-4 h-4 mr-2" />
             Nouveau

@@ -13,7 +13,8 @@ export const ROUTES = {
   // === Routes IA avancées ===
   DecisionTreePage: '/decision-tree',
   KMeansPage: '/kmeans',
-  LinearRegressionPage: '/linear-regression'
+  LinearRegressionPage: '/linear-regression',
+  NeuralNetworkPage: '/neural-network'
 };
 
 
@@ -67,5 +68,10 @@ export const NAV_ITEMS = [
     name: 'Linear Regression',
     path: ROUTES.LinearRegressionPage,
     icon: 'TrendingUp'
+  },
+  {
+    name: 'Neural Network',
+    path: ROUTES.NeuralNetworkPage,
+    icon: 'Network'
   }
 ];

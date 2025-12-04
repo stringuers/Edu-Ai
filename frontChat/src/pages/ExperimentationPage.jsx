@@ -70,7 +70,7 @@ const ExperimentationPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 py-8">
+    <div className="min-h-screen py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Notification */}
         {notification && (
@@ -87,14 +87,14 @@ const ExperimentationPage = () => {
         <div className="mb-8 animate-fade-in">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center space-x-4">
-              <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-3 rounded-xl">
-                <Lightbulb className="w-8 h-8 text-white" />
+              <div className="bg-brand-mint p-3 rounded-xl shadow-card">
+                <Lightbulb className="w-8 h-8 text-brand-slate" />
               </div>
               <div>
-                <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
+                <h1 className="text-3xl md:text-4xl font-bold text-text-primary">
                   Mes Expériences
                 </h1>
-                <p className="text-gray-600 mt-1">
+                <p className="text-text-secondary mt-1">
                   Retrouve tous tes projets et expérimentations IA
                 </p>
               </div>
@@ -113,42 +113,42 @@ const ExperimentationPage = () => {
 
           {/* Statistiques */}
           <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-xl shadow-lg p-6">
+            <div className="bg-white rounded-xl shadow-card p-6 border-l-4 border-brand-mint">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600 mb-1">Total de projets</p>
-                  <p className="text-3xl font-bold text-gray-900">{projects.length}</p>
+                  <p className="text-sm text-text-secondary mb-1">Total de projets</p>
+                  <p className="text-3xl font-bold text-text-primary">{projects.length}</p>
                 </div>
-                <div className="bg-blue-100 p-3 rounded-lg">
-                  <Lightbulb className="w-6 h-6 text-blue-600" />
+                <div className="bg-brand-mint p-3 rounded-lg text-brand-slate">
+                  <Lightbulb className="w-6 h-6" />
                 </div>
               </div>
             </div>
 
-            <div className="bg-white rounded-xl shadow-lg p-6">
+            <div className="bg-white rounded-xl shadow-card p-6 border-l-4 border-brand-mint">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600 mb-1">Conversations</p>
-                  <p className="text-3xl font-bold text-gray-900">
+                  <p className="text-sm text-text-secondary mb-1">Conversations</p>
+                  <p className="text-3xl font-bold text-text-primary">
                     {projects.filter(p => p.module === 'chatbot').length}
                   </p>
                 </div>
-                <div className="bg-purple-100 p-3 rounded-lg">
-                  <MessageSquare className="w-6 h-6 text-purple-600" />
+                <div className="bg-brand-mint p-3 rounded-lg text-brand-slate">
+                  <MessageSquare className="w-6 h-6" />
                 </div>
               </div>
             </div>
 
-            <div className="bg-white rounded-xl shadow-lg p-6">
+            <div className="bg-white rounded-xl shadow-card p-6 border-l-4 border-brand-mint">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600 mb-1">Analyses</p>
-                  <p className="text-3xl font-bold text-gray-900">
+                  <p className="text-sm text-text-secondary mb-1">Analyses</p>
+                  <p className="text-3xl font-bold text-text-primary">
                     {projects.filter(p => p.module === 'image' || p.module === 'text').length}
                   </p>
                 </div>
-                <div className="bg-green-100 p-3 rounded-lg">
-                  <FileText className="w-6 h-6 text-green-600" />
+                <div className="bg-brand-mint p-3 rounded-lg text-brand-slate">
+                  <FileText className="w-6 h-6" />
                 </div>
               </div>
             </div>
@@ -157,12 +157,12 @@ const ExperimentationPage = () => {
 
         {/* Liste des projets */}
         {projects.length === 0 ? (
-          <div className="bg-white rounded-xl shadow-lg p-12 text-center animate-slide-up">
-            <Lightbulb className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+          <div className="bg-white rounded-xl shadow-card p-12 text-center animate-slide-up border border-brand-grey">
+            <Lightbulb className="w-16 h-16 text-text-secondary/40 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-text-primary mb-2">
               Aucun projet pour le moment
             </h3>
-            <p className="text-gray-600 mb-6">
+            <p className="text-text-secondary mb-6">
               Commence à utiliser nos modules IA pour créer tes premiers projets !
             </p>
             <div className="flex justify-center space-x-4">
@@ -173,7 +173,7 @@ const ExperimentationPage = () => {
           </div>
         ) : (
           <div className="space-y-4">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            <h2 className="text-2xl font-bold text-text-primary mb-4">
               Tous les projets ({projects.length})
             </h2>
             
@@ -183,25 +183,25 @@ const ExperimentationPage = () => {
                 className="animate-slide-up"
                 style={{ animationDelay: `${index * 50}ms` }}
               >
-                <Card className="hover:shadow-2xl transition-all duration-300">
+                <Card className="hover:shadow-lg transition-all duration-300">
                   <div className="flex items-start justify-between">
                     <div className="flex items-start space-x-4 flex-1">
-                      <div className={`bg-gradient-to-r ${getModuleColor(project.module)} p-3 rounded-lg text-white`}>
+                      <div className="bg-brand-mint p-3 rounded-lg text-brand-slate shadow-card">
                         {getModuleIcon(project.module)}
                       </div>
                       
                       <div className="flex-1">
-                        <h3 className="text-lg font-bold text-gray-900 mb-2">
+                        <h3 className="text-lg font-bold text-text-primary mb-2">
                           {project.title || 'Projet sans titre'}
                         </h3>
                         
                         {project.description && (
-                          <p className="text-gray-600 mb-3 text-sm">
+                          <p className="text-text-secondary mb-3 text-sm">
                             {project.description}
                           </p>
                         )}
                         
-                        <div className="flex items-center space-x-4 text-sm text-gray-500">
+                        <div className="flex items-center space-x-4 text-sm text-text-secondary">
                           <div className="flex items-center space-x-1">
                             <Calendar className="w-4 h-4" />
                             <span>
@@ -209,7 +209,7 @@ const ExperimentationPage = () => {
                             </span>
                           </div>
                           
-                          <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-semibold">
+                          <span className="px-3 py-1 bg-brand-mint/60 text-brand-slate rounded-full text-xs font-semibold">
                             {project.module === 'chatbot' ? 'Chatbot' : 
                              project.module === 'image' ? 'Image' : 'Texte'}
                           </span>

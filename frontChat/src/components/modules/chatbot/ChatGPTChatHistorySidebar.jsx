@@ -116,7 +116,7 @@ export default function ChatGPTChatHistorySidebar({
   return (
     <aside
       className={[
-        'relative h-full border-r border-gray-200 bg-white text-gray-900',
+        'relative h-full border-r border-brand-grey bg-white text-text-primary',
         'flex flex-col transition-all duration-300 ease-in-out',
         widthClass,
       ].join(' ')}
@@ -128,9 +128,9 @@ export default function ChatGPTChatHistorySidebar({
           }}
           className={[
             'flex items-center gap-2 rounded-md',
-            'bg-gradient-to-r from-blue-600 to-purple-600 text-white',
-            'hover:shadow-lg hover:scale-105',
-            'px-3 py-2 w-full transition focus:outline-none focus:ring-2 focus:ring-purple-500',
+            'bg-brand-accent text-white',
+            'shadow-sm hover:shadow-md',
+            'px-3 py-2 w-full transition focus:outline-none focus:ring-2 focus:ring-brand-accent',
             iconOnly ? 'justify-center' : '',
             newChatDisabled ? 'opacity-50 pointer-events-none hover:scale-100 hover:shadow-none' : '',
           ].join(' ')}
@@ -144,7 +144,7 @@ export default function ChatGPTChatHistorySidebar({
 
         <button
           onClick={onToggleCollapsed}
-          className="inline-flex items-center justify-center rounded-md border-2 border-gray-200 bg-white hover:bg-purple-50 active:bg-purple-100 px-2 py-2 text-xs font-medium text-gray-700"
+          className="inline-flex items-center justify-center rounded-md border border-brand-grey bg-white hover:bg-brand-mint/30 active:bg-brand-mint/40 px-2 py-2 text-xs font-medium text-text-secondary"
           title={collapsed ? 'Étendre' : 'Replier'}
         >
           {collapsed ? '›' : '‹'}
@@ -157,19 +157,19 @@ export default function ChatGPTChatHistorySidebar({
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Rechercher"
-          className="w-full px-3 pr-3 py-2 text-sm rounded-md border-2 border-gray-200 bg-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-300"
+          className="w-full px-3 pr-3 py-2 text-sm rounded-md border border-brand-grey bg-white placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-brand-slate"
         />
       </div>
 
       <div className={['px-2', collapsed ? 'mt-0' : 'mt-2'].join(' ')}>
-        <div className="h-px w-full bg-gray-200" />
+        <div className="h-px w-full bg-brand-grey" />
       </div>
 
       <div className="flex-1 overflow-y-auto scroll-smooth px-2 py-2">
         {sections.map((section) => (
           <div key={section.title} className="mb-2">
             {!collapsed && (
-              <div className="px-2 py-1 text-[11px] uppercase tracking-wide text-gray-500">
+              <div className="px-2 py-1 text-[11px] uppercase tracking-wide text-text-secondary">
                 {section.title}
               </div>
             )}
@@ -185,8 +185,8 @@ export default function ChatGPTChatHistorySidebar({
                       className={[
                         'w-full flex items-center rounded-md px-3 py-2 transition text-left',
                         active
-                          ? 'bg-purple-100/70 border border-purple-200'
-                          : 'hover:bg-purple-50',
+                          ? 'bg-brand-mint/60 border border-brand-mint'
+                          : 'hover:bg-brand-mint/20',
                       ].join(' ')}
                     >
                       <div className={['min-w-0 flex-1', textVisibility, 'transition'].join(' ')}>
@@ -203,14 +203,14 @@ export default function ChatGPTChatHistorySidebar({
                                 setRenameValue('');
                               }
                             }}
-                            className="w-full rounded-sm border-2 border-gray-200 bg-white px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
+                            className="w-full rounded-sm border border-brand-grey bg-white px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-brand-slate"
                           />
                         ) : (
                           <>
-                            <div className={['text-sm font-semibold text-gray-900 truncate', active ? 'text-purple-900' : ''].join(' ')}>
+                            <div className={['text-sm font-semibold text-text-primary truncate'].join(' ')}>
                               {chat.title || 'Untitled'}
                             </div>
-                            <div className="text-[11px] text-gray-500">{toRelative(chat.timestamp)}</div>
+                            <div className="text-[11px] text-text-secondary">{toRelative(chat.timestamp)}</div>
                           </>
                         )}
                       </div>
@@ -227,7 +227,7 @@ export default function ChatGPTChatHistorySidebar({
                             e.stopPropagation();
                             setMenuFor(menuFor === chat.id ? null : chat.id);
                           }}
-                          className="px-2 py-1 rounded-md hover:bg-purple-100 text-gray-600 text-sm font-bold"
+                          className="px-2 py-1 rounded-md hover:bg-brand-mint/40 text-text-secondary text-sm font-bold"
                           aria-label="Open menu"
                         >
                           …
@@ -238,15 +238,15 @@ export default function ChatGPTChatHistorySidebar({
                     {menuFor === chat.id && !collapsed && (
                       <div
                         ref={menuRef}
-                        className="absolute right-2 top-9 z-50 w-40 rounded-md border-2 border-gray-200 bg-white shadow-lg"
+                        className="absolute right-2 top-9 z-50 w-40 rounded-md border border-brand-grey bg-white shadow-card"
                       >
                         <button
                           onClick={() => handleStartRename(chat)}
-                          className="flex w-full items-center gap-2 px-3 py-2 text-sm hover:bg-purple-50"
+                          className="flex w-full items-center gap-2 px-3 py-2 text-sm hover:bg-brand-mint/30"
                         >
                           Renommer
                         </button>
-                        <div className="h-px bg-gray-200" />
+                        <div className="h-px bg-brand-grey" />
                         <button
                           onClick={() => {
                             setMenuFor(null);
@@ -267,9 +267,9 @@ export default function ChatGPTChatHistorySidebar({
       </div>
 
       <div className="px-2 pb-2">
-        <div className="h-px w-full bg-gray-200 mb-2" />
+        <div className="h-px w-full bg-brand-grey mb-2" />
         {!collapsed && (
-          <div className="px-2 py-1 text-[11px] text-gray-500">
+          <div className="px-2 py-1 text-[11px] text-text-secondary">
             {filtered.length} conversation{filtered.length !== 1 ? 's' : ''}
           </div>
         )}

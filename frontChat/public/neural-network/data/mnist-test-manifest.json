@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "numSamples": 10000,
+  "imageShape": [
+    28,
+    28
+  ],
+  "image": {
+    "file": "/neural-network/data/mnist-test-images-uint8.bin",
+    "dtype": "uint8"
+  },
+  "labels": {
+    "file": "/neural-network/data/mnist-test-labels-uint8.bin",
+    "dtype": "uint8"
+  }
+}
